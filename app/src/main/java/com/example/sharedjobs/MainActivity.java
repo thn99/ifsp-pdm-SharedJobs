@@ -12,66 +12,51 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.sharedjobs.databinding.ActivityMainBinding;
+
  public class MainActivity extends AppCompatActivity {
 
-     private EditText nomeEt;
-     private EditText emailEt;
-     private RadioGroup tipoTelefoneRg;
-     private RadioButton telefoneComercialRb;
-     private RadioButton telefoneResidencialRb;
-     private EditText telefoneEt;
-     private RadioGroup sexoRg;
-     private RadioButton masculinoRb;
-     private RadioButton femininoRb;
-     private EditText dataEt;
-     private Spinner formacaoSp;
-     private LinearLayout formacaoLl;
-     private EditText anoFormaturaEt;
-     private EditText anoConclusaoEt;
-     private EditText orientadorEt;
-     private EditText instituicaoEt;
-     private EditText monografiaEt;
-     private EditText vagaEt;
+     private ActivityMainBinding activityMainBinding;
      String tipoTelefone;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        bindViews();
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
 
-        formacaoSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        activityMainBinding.formacaoSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position <= 1) {
-                    anoFormaturaEt.setVisibility(View.VISIBLE);
-                    anoConclusaoEt.setVisibility(View.GONE);
-                    anoConclusaoEt.setText("");
-                    orientadorEt.setVisibility(View.GONE);
-                    orientadorEt.setText("");
-                    instituicaoEt.setVisibility(View.GONE);
-                    instituicaoEt.setText("");
-                    monografiaEt.setVisibility(View.GONE);
-                    monografiaEt.setText("");
+                    activityMainBinding.anoFormaturaEt.setVisibility(View.VISIBLE);
+                    activityMainBinding.anoConclusaoEt.setVisibility(View.GONE);
+                    activityMainBinding.anoConclusaoEt.setText("");
+                    activityMainBinding.orientadorEt.setVisibility(View.GONE);
+                    activityMainBinding.orientadorEt.setText("");
+                    activityMainBinding.instituicaoEt.setVisibility(View.GONE);
+                    activityMainBinding.instituicaoEt.setText("");
+                    activityMainBinding.monografiaEt.setVisibility(View.GONE);
+                    activityMainBinding.monografiaEt.setText("");
                 } else if (position == 2 || position == 3){
-                    anoConclusaoEt.setVisibility(View.VISIBLE);
-                    instituicaoEt.setVisibility(View.VISIBLE);
-                    instituicaoEt.setText("");
-                    monografiaEt.setVisibility(View.GONE);
-                    monografiaEt.setText("");
-                    anoFormaturaEt.setVisibility(View.GONE);
-                    anoFormaturaEt.setText("");
-                    orientadorEt.setVisibility(View.GONE);
-                    orientadorEt.setText("");
+                    activityMainBinding.anoConclusaoEt.setVisibility(View.VISIBLE);
+                    activityMainBinding.instituicaoEt.setVisibility(View.VISIBLE);
+                    activityMainBinding.instituicaoEt.setText("");
+                    activityMainBinding.monografiaEt.setVisibility(View.GONE);
+                    activityMainBinding.monografiaEt.setText("");
+                    activityMainBinding.anoFormaturaEt.setVisibility(View.GONE);
+                    activityMainBinding.anoFormaturaEt.setText("");
+                    activityMainBinding.orientadorEt.setVisibility(View.GONE);
+                    activityMainBinding.orientadorEt.setText("");
                 } else {
-                    anoConclusaoEt.setVisibility(View.VISIBLE);
-                    instituicaoEt.setVisibility(View.VISIBLE);
-                    monografiaEt.setVisibility(View.VISIBLE);
-                    orientadorEt.setVisibility(View.VISIBLE);
-                    anoFormaturaEt.setVisibility(View.GONE);
-                    anoFormaturaEt.setText("");
+                    activityMainBinding.anoConclusaoEt.setVisibility(View.VISIBLE);
+                    activityMainBinding.instituicaoEt.setVisibility(View.VISIBLE);
+                    activityMainBinding.monografiaEt.setVisibility(View.VISIBLE);
+                    activityMainBinding.orientadorEt.setVisibility(View.VISIBLE);
+                    activityMainBinding.anoFormaturaEt.setVisibility(View.GONE);
+                    activityMainBinding.anoFormaturaEt.setText("");
                 }
             }
 
@@ -82,23 +67,6 @@ import android.widget.Toast;
         });
     }
 
-     private void bindViews(){
-         nomeEt = findViewById(R.id.nomeEt);
-         emailEt = findViewById(R.id.emailEt);
-         tipoTelefoneRg = findViewById(R.id.tipoTelefoneRg);
-         telefoneEt = findViewById(R.id.telefoneEt);
-         dataEt = findViewById(R.id.dataEt);
-         formacaoSp = findViewById(R.id.formacaoSp);
-         formacaoLl = findViewById(R.id.formacaoLl);
-         anoFormaturaEt = findViewById(R.id.anoFormaturaEt);
-         anoConclusaoEt = findViewById(R.id.anoConclusaoEt);
-         orientadorEt = findViewById(R.id.orientadorEt);
-         instituicaoEt = findViewById(R.id.instituicaoEt);
-         monografiaEt = findViewById(R.id.monografiaEt);
-         vagaEt = findViewById(R.id.vagaEt);
-         sexoRg = findViewById(R.id.sexoRg);
-     }
-
     public void onClickButton(View view) {
         if(view.getId() == R.id.salvarBt) saveForm();
         else cleanForm();
@@ -106,32 +74,32 @@ import android.widget.Toast;
 
      private void saveForm() {
         StringBuffer sb = new StringBuffer();
-        sb.append("Nome: ").append(nomeEt.getText().toString()).append("\n")
-                .append("Email: ").append(emailEt.getText().toString()).append("\n");
-        tipoTelefone = (tipoTelefoneRg.getCheckedRadioButtonId() == R.id.telefoneComercialRb)
+        sb.append("Nome: ").append(activityMainBinding.nomeEt.getText().toString()).append("\n")
+                .append("Email: ").append(activityMainBinding.emailEt.getText().toString()).append("\n");
+        tipoTelefone = (activityMainBinding.tipoTelefoneRg.getCheckedRadioButtonId() == R.id.telefoneComercialRb)
                 ? "Comercial" : "Residencial";
         sb.append("Tipo de telefone: ").append(tipoTelefone).append("\n")
-                .append("Telefone: ").append(telefoneEt.getText().toString()).append("\n")
+                .append("Telefone: ").append(activityMainBinding.telefoneEt.getText().toString()).append("\n")
                 .append("Sexo: ");
-        if (sexoRg.getCheckedRadioButtonId() == R.id.masculinoRb) sb.append("Masculino").append("\n");
+        if (activityMainBinding.sexoRg.getCheckedRadioButtonId() == R.id.masculinoRb) sb.append("Masculino").append("\n");
         else sb.append("Feminino").append("\n");
-        sb.append("Data de Nascimento: ").append(dataEt.getText().toString()).append("\n");
+        sb.append("Data de Nascimento: ").append(activityMainBinding.dataEt.getText().toString()).append("\n");
 
 
         Toast.makeText(this, sb.toString(), Toast.LENGTH_LONG).show();
      }
      private void cleanForm() {
-        nomeEt.setText("");
-        emailEt.setText("");
-        dataEt.setText("");
-        tipoTelefoneRg.clearCheck();
-        sexoRg.clearCheck();
-        anoFormaturaEt.setText("");
-        anoConclusaoEt.setText("");
-        instituicaoEt.setText("");
-        orientadorEt.setText("");
-        monografiaEt.setText("");
-        vagaEt.setText("");
-        telefoneEt.setText("");
+        activityMainBinding.nomeEt.setText("");
+        activityMainBinding.emailEt.setText("");
+        activityMainBinding.dataEt.setText("");
+        activityMainBinding.tipoTelefoneRg.clearCheck();
+        activityMainBinding.sexoRg.clearCheck();
+        activityMainBinding.anoFormaturaEt.setText("");
+        activityMainBinding.anoConclusaoEt.setText("");
+        activityMainBinding.instituicaoEt.setText("");
+        activityMainBinding.orientadorEt.setText("");
+        activityMainBinding.monografiaEt.setText("");
+        activityMainBinding.vagaEt.setText("");
+        activityMainBinding.telefoneEt.setText("");
      }
  }
